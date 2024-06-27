@@ -48,7 +48,10 @@
             }
             aside {
                 float: left;
-                margin: 10px 0 0 10px;
+                margin: 60px 0 0 15px;
+            }
+            #city {
+                list-style-type: none;
             }
             #city li{
                 padding: 2px 0 2px 0;
@@ -57,7 +60,48 @@
                 border-bottom: dashed 2px black;
             }
             section {
-                margin: 50px 0 0 100px;
+                margin: 70px 0 0 200px;
+                width: 1200px;
+            }
+            #top {
+                border-collapse: collapse;
+                margin: 0 300px 0 300px;
+                text-align: center;
+            }
+            #top td {
+                width: 150px;
+                height: 50px;
+            }
+            #top th {
+                width: 150px;
+                height: 50px;
+            }
+            #list {
+                border-collapse: collapse;
+                margin: 40px 0 0 0;
+                text-align: center;
+            }
+            #list th {
+                background-color: darksalmon;
+            }
+            #list td {
+                height: 150px;
+                border-bottom: solid 1px gray;
+            }
+            #name {
+                width: 250px;
+            }
+            #add{
+                width: 400px;
+            }
+            #price{
+                width: 150px;
+            }
+            #update{
+                width: 200px;
+            }
+            #note {
+                width: 250px;
             }
         </style>
     </head>
@@ -151,62 +195,64 @@
                 </li>
             </ul>
         </aside>
-            <h2>주유소 정보 자동 불러오기 및 표시</h2>
-
-<div id="stations"></div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('seoul.csv')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch CSV file');
-            }
-            return response.text();
-        })
-        .then(data => {
-            var parsedData = parseCSV(data);
-            displayStations(parsedData);
-        })
-        .catch(error => {
-            console.error('Error fetching the CSV file:', error);
-        });
-});
-
-function parseCSV(data) {
-    var rows = data.split('\n');
-    var result = [];
-    var headers = rows[0].split(',');
-
-    for (var i = 1; i < rows.length; i++) {
-        var obj = {};
-        var row = rows[i].split(',');
-
-        if (row.length === headers.length) {
-            for (var j = 0; j < headers.length; j++) {
-                obj[headers[j].trim()] = row[j].trim();
-            }
-            result.push(obj);
-        }
-    }
-
-    return result;
-}
-
-function displayStations(data) {
-    var stationsDiv = document.getElementById('stations');
-    stationsDiv.innerHTML = '';
-
-    data.forEach(function(station) {
-        if(station.name && station.address) {
-            var stationDiv = document.createElement('div');
-            stationDiv.className = 'station';
-            stationDiv.innerHTML = '<h3>' + station.name + '</h3>' +
-                                   '<p>주소: ' + station.address + '</p>';
-            stationsDiv.appendChild(stationDiv);
-        }
-    });
-}
-</script>
+        <section>
+            <table id="top">
+            <tr>
+                <th rowspan="2">서울특별시</th>
+                <td>평균가는</td>
+                <td>휘발유 1555</td>
+                <td>경유 1555</td>
+            </tr>
+            <tr>
+                <td>최저가는</td>
+                <td>휘발유 1555</td>
+                <td>경유 1555</td>
+            </tr>
+            </table>
+            <table id="list">
+                <tr>
+                    <th id="name">주유소명</th>
+                    <th id="add">주소</th>
+                    <th id="price">가격</th>
+                    <th id="update">정보 갱신일</th>
+                    <th id="note">비고</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </section>
     </body>
 </html>
