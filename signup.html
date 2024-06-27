@@ -123,12 +123,11 @@
         
         <script>
             document.getElementById("signupForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // 폼 제출 기본 동작 막기
+                event.preventDefault();
             
                 var signupUsername = document.getElementById("signupUsername").value;
                 var signupPassword = document.getElementById("signupPassword").value;
             
-                // LocalStorage에 사용자 정보 저장
                 var users = JSON.parse(localStorage.getItem("users")) || [];
                 users.push({ username: signupUsername, password: signupPassword });
                 localStorage.setItem("users", JSON.stringify(users));
