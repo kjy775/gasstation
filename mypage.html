@@ -6,28 +6,17 @@
 </head>
 <body>
     <h2>마이페이지</h2>
-    <div id="user-info">
-        <p></p>
-    </div>
-    <a href="logout.php">로그아웃</a>
-
+    <div class="userinfo" id="userinfo"></div>
+    
     <script>
-        function fetchUserInfo() {
-            fetch('userinfo.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    document.getElementById('user-info').innerHTML = `
-                        <p>이름: ${data.username}</p>
-                        <p>이메일: ${data.email}</p>
-                    `;
-                } else {
-                    document.getElementById('user-info').innerHTML = '로그인하지 않았습니다. <a href="login.html">로그인</a>하세요.';
-                }
-            });
-        }
-
-        fetchUserInfo();
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    
+    if (!currentUser) {
+        window.location.href = "index.html";
+    } else {
+        var userinfoDiv = document.getElementById("userinfo");
+        userinfoDiv.innerHTML = "<p>사용자명: " + currentUser.username + "</p>";
+    }
     </script>
 </body>
 </html>
