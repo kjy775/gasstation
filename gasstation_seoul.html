@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            header {
+                width: 1600px;
+                height: 100px;
+                margin-top: 20px;
+                margin-left: 10px;
+                border-bottom: solid 2px black;
+            }
+            #logo {
+                float: left;
+            }
+            #title {
+                float: left;
+                font-weight: bold;
+                font-family:'마당체';
+
+            }
+            #menu {
+                float: right;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+            #menu li {
+                list-style-type: none;
+                display: inline;
+                margin: 5px;
+            }
+            a {
+            color: inherit;
+            text-decoration: none;
+            }
+            #userinfo {
+                float: left;
+                margin: 0 0 0 60px;
+                font-family: '맑은고딕';
+                font-weight: bold;
+            }
+            button {
+                margin: 0 0 0 20px;
+            }
+            aside {
+                float: left;
+                margin: 10px 0 0 10px;
+            }
+            #city li{
+                padding: 2px 0 2px 0;
+                text-align: center;
+                font-weight: bold;
+                border-bottom: dashed 2px black;
+            }
+            section {
+                margin: 50px 0 0 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href=index.html>
+            <div id="logo">
+                <img src="img/logo.png">
+            </div>
+            <div id="title">
+                주유소<br>찾는<br>사람들
+            </div>
+            </a>
+            <div id="userinfo">
+            </div>
+            <button id="authButton"></button>
+            
+            <script>
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            
+            var authButton = document.getElementById("authButton");
+            
+            if (!currentUser) {
+                authButton.innerHTML = "로그인";
+                authButton.addEventListener("click", function() {
+                    window.location.href = "login.html";
+                });
+            } else {
+                var userinfoDiv = document.getElementById("userinfo");
+                userinfoDiv.innerHTML = "<p>사용자명: " + currentUser.username + "</p>";
+                authButton.innerHTML = "로그아웃";
+                authButton.addEventListener("click", function() {
+                    localStorage.removeItem("currentUser");
+                    window.location.href = "index.html";
+                });
+            }
+            </script>
+                <ul id="menu">
+                    <a href=gasstation_seoul.html>
+                <li>주유소 찾기</li>
+                </a>
+                <li>|</li>
+                <a href=favorites.html>
+                <li>즐겨찾기</li>
+                </a>
+                <li>|</li>
+                <a href=login.html>
+                <li>로그인&회원가입</li>
+                </a>
+                <li>|</li>
+                <a href=mypage.html>
+                <li>마이페이지</li>
+                </a>
+            </ul>
+        </header>
+        <aside>
+            <ul id="city">
+                <li><a href=gasstation_seoul.html>서울</a>
+                </li>
+                <li><a href=gasstation_busan.html>부산</a>
+                </li>
+                <li><a href=gasstation_daegu.html>대구</a>
+                </li>
+                <li><a href=gasstation_incheon.html>인천</a>
+                </li>
+                <li><a href=gasstation_gwangju.html>광주</a>
+                </li>
+                <li><a href=gasstation_daejeon.html>대전</a>
+                </li>
+                <li><a href=gasstation_ulsan.html>울산</a>
+                </li>
+                <li><a href=gasstation_sejong.html>세종</a>
+                </li>
+                <li><a href=gasstation_gyenggi.html>경기</a>
+                </li>
+                <li><a href=gasstation_gangwon.html>강원</a>
+                </li>
+                <li><a href=gasstation_chungbuk.html>충북</a>
+                </li>
+                <li><a href=gasstation_chungnam.html>충남</a>
+                </li>
+                <li><a href=gasstation_jeonbuk.html>전북</a>
+                </li>
+                <li><a href=gasstation_jeonnam.html>전남</a>
+                </li>
+                <li><a href=gasstation_gyeongbuk.html>경북</a>
+                </li>
+                <li><a href=gasstation_gyeongnam.html>경남</a>
+                </li>
+                <li><a href=gasstation_jeju.html>제주</a>
+                </li>
+            </ul>
+        </aside>
+        <section>
+            <div id="stations"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('https://kjy775.github.io/gasstation/seoul.csv')
+        .then(response => response.text())
+        .then(data => {
+            var parsedData = parseCSV(data);
+            displayStations(parsedData);
+        })
+        .catch(error => {
+            console.error('Error fetching the CSV file:', error);
+        });
+});
+
+function parseCSV(data) {
+    var rows = data.split('\n');
+    var result = [];
+    var headers = rows[0].split(',');
+
+    for (var i = 1; i < rows.length; i++) {
+        var obj = {};
+        var row = rows[i].split(',');
+
+        if (row.length === headers.length) {
+            for (var j = 0; j < headers.length; j++) {
+                obj[headers[j].trim()] = row[j].trim();
+            }
+            result.push(obj);
+        }
+    }
+
+    return result;
+}
+
+function displayStations(data) {
+    var stationsDiv = document.getElementById('stations');
+    stationsDiv.innerHTML = '';
+
+    data.forEach(function(station) {
+        if(station.name && station.address) {
+            var stationDiv = document.createElement('div');
+            stationDiv.className = 'station';
+            stationDiv.innerHTML = '<h3>' + station.name + '</h3>' +
+                                   '<p>주소: ' + station.address + '</p>';
+            stationsDiv.appendChild(stationDiv);
+        }
+    });
+}
+</script>
+        </section>
+    </body>
+</html>
