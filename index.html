@@ -59,11 +59,14 @@
                 font-weight:100;
                 margin: 0 0 50px 0;
             }
-            #user-info {
+            #userinfo {
                 float: left;
                 margin: 0 0 0 60px;
                 font-family: '맑은고딕';
                 font-weight: bold;
+            }
+            button {
+                margin: 0 0 0 20px;
             }
         </style>
     </head>
@@ -77,26 +80,29 @@
                 주유소<br>찾는<br>사람들
             </div>
             </a>
-            <div id="user-info">
-                <p></p>
+            <div id="userinfo">
             </div>
-        
+            <button id="authButton"></button>
+            
             <script>
-                function fetchUserInfo() {
-                    fetch('userinfo.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.loggedIn) {
-                            document.getElementById('user-info').innerHTML = `
-                                <p>아이디: ${data.username}</p>
-                                <a href="logout.php">로그아웃</a>
-                            `;
-                        } else {
-                            document.getElementById('user-info').innerHTML = '';
-                        }
-                    });
-                }
-                fetchUserInfo();
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            
+            var authButton = document.getElementById("authButton");
+            
+            if (!currentUser) {
+                authButton.innerHTML = "로그인";
+                authButton.addEventListener("click", function() {
+                    window.location.href = "login.html";
+                });
+            } else {
+                var userinfoDiv = document.getElementById("userinfo");
+                userinfoDiv.innerHTML = "<p>사용자명: " + currentUser.username + "</p>";
+                authButton.innerHTML = "로그아웃";
+                authButton.addEventListener("click", function() {
+                    localStorage.removeItem("currentUser");
+                    window.location.href = "index.html";
+                });
+            }
             </script>
                 <ul id="menu">
                     <a href=gasstation_seoul.html>

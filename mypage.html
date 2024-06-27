@@ -6,16 +6,29 @@
 </head>
 <body>
     <h2>마이페이지</h2>
-    <div class="userinfo" id="userinfo"></div>
+    <div class="userinfo" id="userinfo">
+    </div>
+    
+    <button id="authButton"></button>
     
     <script>
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
     
+    var authButton = document.getElementById("authButton");
+    
     if (!currentUser) {
-        window.location.href = "index.html";
+        authButton.innerHTML = "로그인";
+        authButton.addEventListener("click", function() {
+            window.location.href = "login.html";
+        });
     } else {
         var userinfoDiv = document.getElementById("userinfo");
         userinfoDiv.innerHTML = "<p>사용자명: " + currentUser.username + "</p>";
+        authButton.innerHTML = "로그아웃";
+        authButton.addEventListener("click", function() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "index.html";
+        });
     }
     </script>
 </body>
