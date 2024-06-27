@@ -151,7 +151,6 @@
                 </li>
             </ul>
         </aside>
-        <section>
             <h2>주유소 정보 자동 불러오기 및 표시</h2>
 
 <div id="stations"></div>
@@ -196,10 +195,10 @@ function parseCSV(data) {
 
 function displayStations(data) {
     var stationsDiv = document.getElementById('stations');
-    stationsDiv.innerHTML = ''; 
+    stationsDiv.innerHTML = '';
 
     data.forEach(function(station) {
-        if(station.name && station.address) { 
+        if(station.name && station.address) {
             var stationDiv = document.createElement('div');
             stationDiv.className = 'station';
             stationDiv.innerHTML = '<h3>' + station.name + '</h3>' +
@@ -209,6 +208,5 @@ function displayStations(data) {
     });
 }
 </script>
-        </section>
     </body>
 </html>
