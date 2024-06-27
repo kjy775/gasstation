@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            header {
+                width: 1600px;
+                height: 100px;
+                margin-top: 20px;
+                margin-left: 10px;
+                border-bottom: solid 2px black;
+            }
+            #logo {
+                float: left;
+            }
+            #title {
+                float: left;
+                font-weight: bold;
+                font-family:'마당체';
+
+            }
+            #menu {
+                float: right;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+            #menu li {
+                list-style-type: none;
+                display: inline;
+                margin: 5px;
+            }
+            a {
+            color: inherit;
+            text-decoration: none;
+            }
+            #user-info {
+                float: left;
+                margin: 0 0 0 60px;
+                font-family: '맑은고딕';
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href=index.html>
+            <div id="logo">
+                <img src="img/logo.png">
+            </div>
+            <div id="title">
+                주유소<br>찾는<br>사람들
+            </div>
+            </a>
+            <div id="user-info">
+                <p>회원 정보를 불러오는 중...</p>
+            </div>
+            <script>
+                function fetchUserInfo() {
+                    fetch('userinfo.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.loggedIn) {
+                            document.getElementById('user-info').innerHTML = `
+                                <p>아이디: ${data.username}</p>
+                                <a href="logout.php">로그아웃</a>
+                            `;
+                        } else {
+                            document.getElementById('user-info').innerHTML = '';
+                        }
+                    });
+                }
+                fetchUserInfo();
+            </script>
+                <ul id="menu">
+                    <a href=gasstation_seoul.html>
+                <li>주유소 찾기</li>
+                </a>
+                <li>|</li>
+                <a href=favorites.html>
+                <li>즐겨찾기</li>
+                </a>
+                <li>|</li>
+                <a href=login.html>
+                <li>로그인&회원가입</li>
+                </a>
+                <li>|</li>
+                <a href=mypage.html>
+                <li>마이페이지</li>
+                </a>
+            </ul>
+        </header>
+    </body>
+</html>

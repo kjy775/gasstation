@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+    <h2>마이페이지</h2>
+    <div id="user-info">
+        <p>회원 정보를 불러오는 중...</p>
+    </div>
+    <a href="logout.php">로그아웃</a>
+
+    <script>
+        function fetchUserInfo() {
+            fetch('userinfo.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    document.getElementById('user-info').innerHTML = `
+                        <p>이름: ${data.username}</p>
+                        <p>이메일: ${data.email}</p>
+                    `;
+                } else {
+                    document.getElementById('user-info').innerHTML = '로그인하지 않았습니다. <a href="login.html">로그인</a>하세요.';
+                }
+            });
+        }
+
+        fetchUserInfo();
+    </script>
+</body>
+</html>
