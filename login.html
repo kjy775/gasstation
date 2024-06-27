@@ -92,31 +92,38 @@
     <h2>로그인</h2>
     <section>
         <form id="loginForm">
-            <label for="username">사용자명:</label>
-            <input type="text" id="username" name="username" required><br><br>
+            <label for="loginUsername">사용자명:</label>
+            <input type="text" id="loginUsername" name="loginUsername" required><br><br>
             
-            <label for="password">비밀번호:</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <label for="loginPassword">비밀번호:</label>
+            <input type="password" id="loginPassword" name="loginPassword" required><br><br>
             
             <input type="submit" value="로그인">
-            <button><a href=signup.html>회원가입</a></button>
         </form>
         
         <div id="message"></div>
         
         <script>
         document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-        
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-        
-            if (username === "admin" && password === "password") {
-                document.getElementById("message").innerHTML = "로그인 성공!";
-            } else {
-                document.getElementById("message").innerHTML = "사용자명 또는 비밀번호가 올바르지 않습니다.";
-            }
-        });
+    event.preventDefault();
+
+    var loginUsername = document.getElementById("loginUsername").value;
+    var loginPassword = document.getElementById("loginPassword").value;
+
+
+    var users = JSON.parse(localStorage.getItem("users")) || [];
+    var authenticatedUser = users.find(function(user) {
+        return user.username === loginUsername && user.password === loginPassword;
+    });
+
+    if (authenticatedUser) {
+        localStorage.setItem("currentUser", JSON.stringify(authenticatedUser));
+        document.getElementById("message").innerHTML = "로그인 성공! 환영합니다, " + authenticatedUser.username + "님";
+
+    } else {
+        document.getElementById("message").innerHTML = "사용자명 또는 비밀번호가 올바르지 않습니다.";
+    }
+});
         </script>
     </section>
 </body>

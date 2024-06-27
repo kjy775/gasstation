@@ -109,55 +109,33 @@
     <h2>회원가입</h2>
     <section>
         <form id="signupForm">
-            <label for="username">사용자명:</label>
-            <input type="text" id="username" name="username" required><br><br>
+            <label for="signupUsername">사용자명:</label>
+            <input type="text" id="signupUsername" name="signupUsername" required><br><br>
             
-            <label for="email">이메일:</label>
-            <input type="email" id="email" name="email" required><br><br>
-            
-            <label for="password">비밀번호:</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <label for="signupPassword">비밀번호:</label>
+            <input type="password" id="signupPassword" name="signupPassword" required><br><br>
             
             <input type="submit" value="가입하기">
         </form>
         
+        
         <div id="message"></div>
         
         <script>
-        document.getElementById("signupForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // 폼 제출 기본 동작 막기
-        
-            var username = document.getElementById("username").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-        
-            // GitHub Issues API를 사용하여 데이터를 저장할 예정
-            var apiUrl = "https://api.github.com/repos/your-username/your-repo/issues";
-            var postData = {
-                title: "New User Registration",
-                body: "Username: " + username + "\nEmail: " + email + "\nPassword: " + password,
-                labels: ["회원가입"]
-            };
-        
-            fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Authorization": "token your-github-token",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(postData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                document.getElementById("message").innerHTML = "회원가입이 완료되었습니다.";
+            document.getElementById("signupForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // 폼 제출 기본 동작 막기
+            
+                var signupUsername = document.getElementById("signupUsername").value;
+                var signupPassword = document.getElementById("signupPassword").value;
+            
+                // LocalStorage에 사용자 정보 저장
+                var users = JSON.parse(localStorage.getItem("users")) || [];
+                users.push({ username: signupUsername, password: signupPassword });
+                localStorage.setItem("users", JSON.stringify(users));
+            
                 document.getElementById("signupForm").reset();
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                document.getElementById("message").innerHTML = "회원가입 중 오류가 발생했습니다.";
+                alert("회원가입이 완료되었습니다!");
             });
-        });
         </script>
     </section>
 </body>
