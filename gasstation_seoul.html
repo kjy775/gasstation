@@ -158,7 +158,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('https://kjy775.github.io/gasstation/seoul.csv')
+    fetch('seoul.csv')
         .then(response => response.text())
         .then(data => {
             var parsedData = parseCSV(data);
