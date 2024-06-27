@@ -91,32 +91,33 @@
     </header>
     <h2>로그인</h2>
     <section>
-    <form id="loginForm">
-        <label for="email">이 메 일:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">로그인</button>
-        <a href=signup.html><button><a href=signup.html>회원가입</a></button></a>
-    </form>
-    <div id="loginResult"></div>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
+        <form id="loginForm">
+            <label for="username">사용자명:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            
+            <input type="submit" value="로그인">
+            <button><a href=signup.html>회원가입</a></button>
+        </form>
+        
+        <div id="message"></div>
+        
+        <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            var formData = new FormData(this);
-            fetch('login.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('loginResult').innerHTML = data;
-                if (data.includes("로그인이 완료되었습니다!")) {
-                    window.location.href = 'index.html';
-                }
-            });
+        
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+        
+            if (username === "admin" && password === "password") {
+                document.getElementById("message").innerHTML = "로그인 성공!";
+            } else {
+                document.getElementById("message").innerHTML = "사용자명 또는 비밀번호가 올바르지 않습니다.";
+            }
         });
-    </script>
+        </script>
     </section>
 </body>
 </html>
